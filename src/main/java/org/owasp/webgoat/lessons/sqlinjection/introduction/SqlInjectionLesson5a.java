@@ -46,10 +46,12 @@ public class SqlInjectionLesson5a implements AssignmentEndpoint {
     try (Connection connection = dataSource.getConnection()) {
           // Sanitize input using OWASP's ESAPI Encoder library
     //   Still not complete solution!
-    Encoder esapiEncoder = new DefaultEncoder();
-    String sanitizedUserName = esapiEncoder.encodeForSQL(new OracleCodec(), userName); 
+    // uncomment to fix 
+    // Encoder esapiEncoder = new DefaultEncoder();
+    // String sanitizedUserName = esapiEncoder.encodeForSQL(new OracleCodec(), userName); 
       query =
-          "SELECT * FROM user_data WHERE first_name = 'John' and last_name = '" + sanitizedUserName + "'";
+            "SELECT * FROM user_data WHERE first_name = 'John' and last_name = '" + accountName + "'";
+          //"SELECT * FROM user_data WHERE first_name = 'John' and last_name = '" + sanitizedUserName + "'";
       try (Statement statement =
           connection.createStatement(
               ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
